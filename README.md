@@ -13,13 +13,34 @@
 ### 接线
 
 - PB13 -> DIR
-- PB14 -> ENABLE
-- A8 -> STEP
+- PB14 -> ENABLE，低电平有效
+- PA8 -> STEP，上升沿有效
 
 ## 算法
 
+### 使用的算法
+
 - 梯形加减速算法
 - 非阻塞性控制
+
+### 参数设置
+
+PB13和PB14都设置为浮空的高速推挽输出
+
+- ENABLE这个脚初始化高电平比较好，A4988的ENABLE是低电平有效
+
+PA8连着TIM1_CH1，这里我使用了TIM1_CH1的PWM输出功能  
+
+- PSC设置为`72-1`
+- ARR初始化为`2000-1`
+- CMP初始化为`1000`
+
+中断可以使用`TIM1 update interrupt`或`TIM1 capture compare interrupt`  
+
+- 前者在ARR溢出时触发
+- 后者在CNT == CMP 时触发
+
+我这里使用了后者，核心思想就是在中断中使`step_now ++`，然后在`step_now == step_goal`的时候停止转动就可以了  
 
 ## 程序结构
 
