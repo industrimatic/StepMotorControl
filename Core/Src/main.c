@@ -150,7 +150,7 @@ void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim)
           motor1.State = MOTOR_ACCEL;
           motor1.Current_Speed += motor1.Accel_Rate;
         }
-        else if (motor1.Step_Now > (motor1.Step_Goal - motor1.Decel_Steps))
+        else if (motor1.Step_Now >= (motor1.Step_Goal - motor1.Decel_Steps))
         {
           motor1.State = MOTOR_DECEL;
           motor1.Current_Speed -= motor1.Decel_Rate;
@@ -236,7 +236,13 @@ int main(void)
       OLED_ShowString(1, 1, speed_info);
       OLED_ShowString(2, 1, step_info);
     }
+    snprintf(speed_info, sizeof(speed_info), "speed:%.2f     ", motor1.Current_Speed);
+    snprintf(step_info, sizeof(step_info), "step:%.2d      ", motor1.Step_Now);
+
+    OLED_ShowString(1, 1, speed_info);
+    OLED_ShowString(2, 1, step_info);
     HAL_Delay(500);
+
     Motor_Step_Trapezoid(6000, 2 * total_steps, 2 * acc_steps, 2 * dec_steps, Dir2);
     while (motor1.State != MOTOR_STOP)
     {
@@ -246,6 +252,11 @@ int main(void)
       OLED_ShowString(1, 1, speed_info);
       OLED_ShowString(2, 1, step_info);
     }
+    snprintf(speed_info, sizeof(speed_info), "speed:%.2f     ", motor1.Current_Speed);
+    snprintf(step_info, sizeof(step_info), "step:%.2d      ", motor1.Step_Now);
+
+    OLED_ShowString(1, 1, speed_info);
+    OLED_ShowString(2, 1, step_info);
     HAL_Delay(500);
 
     /* USER CODE END WHILE */
