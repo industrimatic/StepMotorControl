@@ -8,6 +8,7 @@
                 "c:\\Users\\Reef\\Desktop\\StepMotorControl\\Drivers\\STM32F1xx_HAL_Driver\\Inc\\Legacy",
                 "c:\\Users\\Reef\\Desktop\\StepMotorControl\\Drivers\\CMSIS\\Device\\ST\\STM32F1xx\\Include",
                 "c:\\Users\\Reef\\Desktop\\StepMotorControl\\Drivers\\CMSIS\\Include",
+                "c:\\Users\\Reef\\Desktop\\StepMotorControl\\Drivers\\Hardware",
                 "D:\\Keil5\\ARM\\ARMCC\\include",
                 "D:\\Keil5\\ARM\\ARMCC\\include\\rw",
                 "c:\\Users\\Reef\\Desktop\\StepMotorControl\\MDK-ARM",

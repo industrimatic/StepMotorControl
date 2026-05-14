@@ -178,57 +178,6 @@ void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim)
   }
 }
 
-// volatile uint32_t Motor_Step_Goal;
-// volatile uint32_t Motor_Step_Now;
-// volatile uint8_t Motor_Is_Running;
-
-// void Motor_Step(uint32_t Step_Goal, GPIO_PinState Dir, float speed)
-// {
-
-//   if (Motor_Is_Running == 1)
-//     return;
-//   else
-//   {
-//     uint32_t freq = speed / (1.8f);
-//     if (freq == 0)
-//       freq = 1;
-//     uint32_t ARR = 1000000 / freq;
-
-//     if (ARR > 65535)
-//       ARR = 65535;
-//     if (ARR < 100)
-//       ARR = 100;
-
-//     __HAL_TIM_SET_AUTORELOAD(&htim1, ARR - 1);
-//     __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, ARR / 2);
-//     __HAL_TIM_SET_COUNTER(&htim1, 0);
-
-//     Motor_Step_Goal = Step_Goal;
-//     Motor_Step_Now = 0;
-//     Motor_Is_Running = 1;
-
-//     HAL_GPIO_WritePin(DIR_GPIO_Port, DIR_Pin, Dir);
-//     HAL_GPIO_WritePin(ENABLE_GPIO_Port, ENABLE_Pin, GPIO_PIN_RESET);
-//     HAL_TIM_PWM_Start_IT(&htim1, TIM_CHANNEL_1);
-//   }
-// }
-// void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim)
-// {
-//   if (htim->Instance == TIM1)
-//   {
-//     if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1)
-//     {
-//       Motor_Step_Now++;
-//       if (Motor_Step_Now >= Motor_Step_Goal)
-//       {
-//         HAL_TIM_PWM_Stop_IT(&htim1, TIM_CHANNEL_1);
-//         HAL_GPIO_WritePin(ENABLE_GPIO_Port, ENABLE_Pin, GPIO_PIN_SET);
-
-//         Motor_Is_Running = 0;
-//       }
-//     }
-//   }
-// }
 /* USER CODE END 0 */
 
 /**
@@ -248,7 +197,7 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-
+  OLED_Init();
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -266,9 +215,11 @@ int main(void)
   __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 1000);
 
   uint32_t total_steps = 800;
-  uint32_t acc_steps = 0.1 * total_steps;
-  uint32_t dec_steps = 0.1 * total_steps;
+  uint32_t acc_steps = 0.2 * total_steps;
+  uint32_t dec_steps = 0.2 * total_steps;
 
+  char speed_info[16];
+  char step_info[16];
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -278,11 +229,23 @@ int main(void)
     // speed is from 30 to 6000
     Motor_Step_Trapezoid(3000, total_steps, acc_steps, dec_steps, Dir1);
     while (motor1.State != MOTOR_STOP)
-      ;
+    {
+      snprintf(speed_info, sizeof(speed_info), "speed:%.2f     ", motor1.Current_Speed);
+      snprintf(step_info, sizeof(step_info), "step:%.2d      ", motor1.Step_Now);
+
+      OLED_ShowString(1, 1, speed_info);
+      OLED_ShowString(2, 1, step_info);
+    }
     HAL_Delay(500);
-    Motor_Step_Trapezoid(6000, total_steps, acc_steps, dec_steps, Dir2);
+    Motor_Step_Trapezoid(6000, 2 * total_steps, 2 * acc_steps, 2 * dec_steps, Dir2);
     while (motor1.State != MOTOR_STOP)
-      ;
+    {
+      snprintf(speed_info, sizeof(speed_info), "speed:%.2f     ", motor1.Current_Speed);
+      snprintf(step_info, sizeof(step_info), "step:%.2d      ", motor1.Step_Now);
+
+      OLED_ShowString(1, 1, speed_info);
+      OLED_ShowString(2, 1, step_info);
+    }
     HAL_Delay(500);
 
     /* USER CODE END WHILE */

@@ -17,6 +17,7 @@
 "stepmotorcontrol\stm32f1xx_hal_flash_ex.o"
 "stepmotorcontrol\stm32f1xx_hal_exti.o"
 "stepmotorcontrol\system_stm32f1xx.o"
+"stepmotorcontrol\oled.o"
 --strict --scatter "StepMotorControl\StepMotorControl.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
