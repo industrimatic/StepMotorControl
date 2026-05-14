@@ -7,14 +7,17 @@
 ### 使用的实物
 
 - 主控使用STM32F103C8T6
-- 电驱使用A4988芯片
+- 电驱使用A4988
 - 42步进电机，13一组，46一组
+- 0.96寸OLED，驱动为SSD1306
 
 ### 接线
 
 - PB13 -> DIR
 - PB14 -> ENABLE，低电平有效
 - PA8 -> STEP，上升沿有效
+- PB8 -> OLED_SCL
+- PB9 -> OLED_SDA
 
 ## 算法
 
@@ -51,6 +54,7 @@ PA8连着TIM1_CH1，这里我使用了TIM1_CH1的PWM输出功能
 -> `StepperCtrl_t` : 电机结构体  
 
 - 这里没有严格使用OOP思想写电机结构体，这个程序是本人一时兴起花了一下午写出来的，这块只使用了一个电机，所以没有把`*htim`等东西写到struct里边
+- 可以使用结构体创建的实例访问电机的状态，如：当前速度`motor1.Current_Speed`，当前步数`motor1.Step_Now`，目标步数`motor1.Step_Goal`等
 
 -> `Motor_Step_Trapezoid()` : 电机步进函数  
 
