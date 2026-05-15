@@ -1,7 +1,7 @@
 Dependencies for Project 'StepMotorControl', Target 'StepMotorControl': (DO NOT MODIFY !)
 F (startup_stm32f103xb.s)(0x6A0306E0)(--cpu Cortex-M3 -g --apcs=interwork -I.\RTE\_StepMotorControl-ID:\Keil5\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include-ID:\Keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include--pd "__UVISION_VERSION SETA 524" --pd "_RTE_ SETA 1" --pd "STM32F10X_MD SETA 1"--list startup_stm32f103xb.lst --xref -o stepmotorcontrol\startup_stm32f103xb.o --depend stepmotorcontrol\startup_stm32f103xb.d)
-F (../Core/Src/main.c)(0x6A05E536)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Drivers/Hardware-I.\RTE\_StepMotorControl-ID:\Keil5\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include-ID:\Keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o stepmotorcontrol\main.o --omf_browse stepmotorcontrol\main.crf --depend stepmotorcontrol\main.d)
-I (../Core/Inc/main.h)(0x6A05E1E5)
+F (../Core/Src/main.c)(0x6A06E0D5)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Drivers/Hardware-I.\RTE\_StepMotorControl-ID:\Keil5\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include-ID:\Keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o stepmotorcontrol\main.o --omf_browse stepmotorcontrol\main.crf --depend stepmotorcontrol\main.d)
+I (../Core/Inc/main.h)(0x6A06D2BD)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h)(0x6A02F12A)
 I (../Core/Inc/stm32f1xx_hal_conf.h)(0x6A02F136)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h)(0x6A02F12A)
@@ -29,9 +29,10 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h)(0x6A02F12A)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h)(0x6A02F12A)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h)(0x6A02F12A)
 I (../Drivers/Hardware/OLED.h)(0x6A05DDF0)
+I (../Drivers/Hardware/StepMotor.h)(0x6A06DF75)
 I (D:\Keil5\ARM\ARMCC\include\stdio.h)(0x588B8344)
 F (../Core/Src/stm32f1xx_it.c)(0x6A0306DF)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Drivers/Hardware-I.\RTE\_StepMotorControl-ID:\Keil5\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include-ID:\Keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o stepmotorcontrol\stm32f1xx_it.o --omf_browse stepmotorcontrol\stm32f1xx_it.crf --depend stepmotorcontrol\stm32f1xx_it.d)
-I (../Core/Inc/main.h)(0x6A05E1E5)
+I (../Core/Inc/main.h)(0x6A06D2BD)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h)(0x6A02F12A)
 I (../Core/Inc/stm32f1xx_hal_conf.h)(0x6A02F136)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h)(0x6A02F12A)
@@ -59,10 +60,11 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h)(0x6A02F12A)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h)(0x6A02F12A)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h)(0x6A02F12A)
 I (../Drivers/Hardware/OLED.h)(0x6A05DDF0)
+I (../Drivers/Hardware/StepMotor.h)(0x6A06DF75)
 I (D:\Keil5\ARM\ARMCC\include\stdio.h)(0x588B8344)
 I (../Core/Inc/stm32f1xx_it.h)(0x6A0306DF)
 F (../Core/Src/stm32f1xx_hal_msp.c)(0x6A0306DF)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Drivers/Hardware-I.\RTE\_StepMotorControl-ID:\Keil5\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include-ID:\Keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o stepmotorcontrol\stm32f1xx_hal_msp.o --omf_browse stepmotorcontrol\stm32f1xx_hal_msp.crf --depend stepmotorcontrol\stm32f1xx_hal_msp.d)
-I (../Core/Inc/main.h)(0x6A05E1E5)
+I (../Core/Inc/main.h)(0x6A06D2BD)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h)(0x6A02F12A)
 I (../Core/Inc/stm32f1xx_hal_conf.h)(0x6A02F136)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h)(0x6A02F12A)
@@ -90,6 +92,7 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h)(0x6A02F12A)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h)(0x6A02F12A)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h)(0x6A02F12A)
 I (../Drivers/Hardware/OLED.h)(0x6A05DDF0)
+I (../Drivers/Hardware/StepMotor.h)(0x6A06DF75)
 I (D:\Keil5\ARM\ARMCC\include\stdio.h)(0x588B8344)
 F (../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c)(0x6A02F12A)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Drivers/Hardware-I.\RTE\_StepMotorControl-ID:\Keil5\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include-ID:\Keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o stepmotorcontrol\stm32f1xx_hal_gpio_ex.o --omf_browse stepmotorcontrol\stm32f1xx_hal_gpio_ex.crf --depend stepmotorcontrol\stm32f1xx_hal_gpio_ex.d)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h)(0x6A02F12A)
@@ -499,3 +502,32 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h)(0x6A02F12A)
 I (..\Drivers\Hardware\OLED_Font.h)(0x63087D23)
 F (..\Drivers\Hardware\OLED.h)(0x6A05DDF0)()
 F (..\Drivers\Hardware\OLED_Font.h)(0x63087D23)()
+F (..\Drivers\Hardware\StepMotor.c)(0x6A06E19F)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Drivers/Hardware-I.\RTE\_StepMotorControl-ID:\Keil5\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include-ID:\Keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o stepmotorcontrol\stepmotor.o --omf_browse stepmotorcontrol\stepmotor.crf --depend stepmotorcontrol\stepmotor.d)
+I (..\Drivers\Hardware\StepMotor.h)(0x6A06DF75)
+I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h)(0x6A02F12A)
+I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h)(0x6A02F12A)
+I (../Drivers/CMSIS/Include/core_cm3.h)(0x6A02F121)
+I (D:\Keil5\ARM\ARMCC\include\stdint.h)(0x588B8344)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x6A02F121)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x6A02F121)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x6A02F121)
+I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/system_stm32f1xx.h)(0x6A02F12A)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h)(0x6A02F12A)
+I (../Core/Inc/stm32f1xx_hal_conf.h)(0x6A02F136)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h)(0x6A02F12A)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h)(0x6A02F12A)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x6A02F12A)
+I (D:\Keil5\ARM\ARMCC\include\stddef.h)(0x588B8344)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc_ex.h)(0x6A02F12A)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio.h)(0x6A02F12A)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio_ex.h)(0x6A02F12A)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_exti.h)(0x6A02F12A)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h)(0x6A02F12A)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma_ex.h)(0x6A02F12A)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h)(0x6A02F12A)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h)(0x6A02F12A)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h)(0x6A02F12A)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h)(0x6A02F12A)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h)(0x6A02F12A)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h)(0x6A02F12A)
+F (..\Drivers\Hardware\StepMotor.h)(0x6A06DF75)()

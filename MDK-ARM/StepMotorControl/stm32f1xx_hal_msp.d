@@ -28,4 +28,5 @@ stepmotorcontrol\stm32f1xx_hal_msp.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f
 stepmotorcontrol\stm32f1xx_hal_msp.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
 stepmotorcontrol\stm32f1xx_hal_msp.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
 stepmotorcontrol\stm32f1xx_hal_msp.o: ../Drivers/Hardware/OLED.h
+stepmotorcontrol\stm32f1xx_hal_msp.o: ../Drivers/Hardware/StepMotor.h
 stepmotorcontrol\stm32f1xx_hal_msp.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdio.h

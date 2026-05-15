@@ -505,6 +505,16 @@
               <FileType>5</FileType>
               <FilePath>..\Drivers\Hardware\OLED_Font.h</FilePath>
             </File>
+            <File>
+              <FileName>StepMotor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\Hardware\StepMotor.c</FilePath>
+            </File>
+            <File>
+              <FileName>StepMotor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Drivers\Hardware\StepMotor.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

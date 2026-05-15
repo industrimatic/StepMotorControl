@@ -57,123 +57,15 @@ static void MX_TIM1_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
-typedef enum
-{
-  Dir1 = GPIO_PIN_SET,
-  Dir2 = GPIO_PIN_RESET
-} Dir_t;
+StepMotor_t Motor1;
 
-typedef enum
-{
-  MOTOR_STOP = 0,
-  MOTOR_ACCEL,
-  MOTOR_CRUISE,
-  MOTOR_DECEL
-} MotorState_t;
-
-typedef struct
-{
-  volatile uint32_t Step_Goal;
-  volatile uint32_t Step_Now;
-  volatile MotorState_t State;
-
-  float Start_Speed;
-  float Target_Speed;
-  float Current_Speed;
-
-  uint32_t Accel_Steps;
-  uint32_t Decel_Steps;
-
-  float Accel_Rate;
-  float Decel_Rate;
-} StepperCtrl_t;
-
-StepperCtrl_t motor1;
-
-void Motor_Step_Trapezoid(float Target_Speed, uint32_t Total_Steps, uint32_t Accel_Steps, uint32_t Decel_Steps, Dir_t Dir)
-{
-  if (motor1.State != MOTOR_STOP)
-    return;
-  else
-  {
-    motor1.Step_Goal = Total_Steps;
-    motor1.Step_Now = 0;
-    motor1.Start_Speed = 100.f;
-    motor1.Current_Speed = motor1.Start_Speed;
-    if (Target_Speed < motor1.Start_Speed)
-      motor1.Target_Speed = motor1.Start_Speed;
-    else
-      motor1.Target_Speed = Target_Speed;
-
-    if (Accel_Steps + Decel_Steps >= Total_Steps)
-    {
-      motor1.Accel_Steps = Total_Steps / 2;
-      motor1.Decel_Steps = Total_Steps - motor1.Accel_Steps;
-    }
-    else
-    {
-      motor1.Accel_Steps = Accel_Steps;
-      motor1.Decel_Steps = Decel_Steps;
-    }
-
-    motor1.Accel_Rate = (motor1.Target_Speed - motor1.Start_Speed) / Accel_Steps;
-    motor1.Decel_Rate = (motor1.Target_Speed - motor1.Start_Speed) / Decel_Steps;
-
-    uint32_t ARR = (uint32_t)(1800000.0f / motor1.Current_Speed);
-    __HAL_TIM_SET_AUTORELOAD(&htim1, ARR - 1);
-    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, ARR / 2);
-    __HAL_TIM_SET_COUNTER(&htim1, 0);
-
-    motor1.State = MOTOR_ACCEL;
-    HAL_GPIO_WritePin(DIR_GPIO_Port, DIR_Pin, (GPIO_PinState)Dir);
-    HAL_GPIO_WritePin(ENABLE_GPIO_Port, ENABLE_Pin, GPIO_PIN_RESET);
-    HAL_TIM_PWM_Start_IT(&htim1, TIM_CHANNEL_1);
-  }
-}
 void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim)
 {
-  if (htim->Instance == TIM1)
+  if (htim->Instance == Motor1.htim->Instance)
   {
-    if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1)
+    if (htim->Channel == Motor1.active_channel)
     {
-      motor1.Step_Now++;
-      if (motor1.Step_Now >= motor1.Step_Goal)
-      {
-        HAL_TIM_PWM_Stop_IT(&htim1, TIM_CHANNEL_1);
-        HAL_GPIO_WritePin(ENABLE_GPIO_Port, ENABLE_Pin, GPIO_PIN_SET);
-        motor1.State = MOTOR_STOP;
-      }
-      else
-      {
-        if (motor1.Step_Now <= motor1.Accel_Steps)
-        {
-          motor1.State = MOTOR_ACCEL;
-          motor1.Current_Speed += motor1.Accel_Rate;
-        }
-        else if (motor1.Step_Now >= (motor1.Step_Goal - motor1.Decel_Steps))
-        {
-          motor1.State = MOTOR_DECEL;
-          motor1.Current_Speed -= motor1.Decel_Rate;
-          if (motor1.Current_Speed < motor1.Start_Speed)
-            motor1.Current_Speed = motor1.Start_Speed;
-        }
-        else
-        {
-          motor1.State = MOTOR_CRUISE;
-          motor1.Current_Speed = motor1.Target_Speed;
-        }
-
-        uint32_t new_ARR = (uint32_t)(1800000.0f / motor1.Current_Speed);
-
-        // 硬件保护极限值
-        if (new_ARR > 65535)
-          new_ARR = 65535;
-        if (new_ARR < 100)
-          new_ARR = 100;
-
-        __HAL_TIM_SET_AUTORELOAD(&htim1, new_ARR - 1);
-        __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, new_ARR / 2);
-      }
+      StepMotor_Update_IT(&Motor1);
     }
   }
 }
@@ -198,6 +90,7 @@ int main(void)
 
   /* USER CODE BEGIN Init */
   OLED_Init();
+  StepMotor_Init(&Motor1, &htim1, TIM_CHANNEL_1, GPIOB, GPIO_PIN_13, GPIOB, GPIO_PIN_14, 100.f);
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -227,34 +120,32 @@ int main(void)
   while (1)
   {
     // speed is from 30 to 6000
-    Motor_Step_Trapezoid(3000, total_steps, acc_steps, dec_steps, Dir1);
-    while (motor1.State != MOTOR_STOP)
+    StepMotor_Step_Trapezoid(&Motor1, 3000, total_steps, acc_steps, dec_steps, DIR1);
+    while (Motor1.State != MOTOR_STOP)
     {
-      snprintf(speed_info, sizeof(speed_info), "speed:%.2f     ", motor1.Current_Speed);
-      snprintf(step_info, sizeof(step_info), "step:%.2d      ", motor1.Step_Now);
+      snprintf(speed_info, sizeof(speed_info), "speed:%.2f     ", Motor1.Current_Speed);
+      snprintf(step_info, sizeof(step_info), "step:%.2d      ", Motor1.Step_Now);
 
       OLED_ShowString(1, 1, speed_info);
       OLED_ShowString(2, 1, step_info);
     }
-    snprintf(speed_info, sizeof(speed_info), "speed:%.2f     ", motor1.Current_Speed);
-    snprintf(step_info, sizeof(step_info), "step:%.2d      ", motor1.Step_Now);
-
+    snprintf(speed_info, sizeof(speed_info), "speed:%.2f     ", Motor1.Current_Speed);
+    snprintf(step_info, sizeof(step_info), "step:%.2d      ", Motor1.Step_Now);
     OLED_ShowString(1, 1, speed_info);
     OLED_ShowString(2, 1, step_info);
     HAL_Delay(500);
 
-    Motor_Step_Trapezoid(6000, 2 * total_steps, 2 * acc_steps, 2 * dec_steps, Dir2);
-    while (motor1.State != MOTOR_STOP)
+    StepMotor_Step_Trapezoid(&Motor1, 6000, 2 * total_steps, 2 * acc_steps, 2 * dec_steps, DIR2);
+    while (Motor1.State != MOTOR_STOP)
     {
-      snprintf(speed_info, sizeof(speed_info), "speed:%.2f     ", motor1.Current_Speed);
-      snprintf(step_info, sizeof(step_info), "step:%.2d      ", motor1.Step_Now);
+      snprintf(speed_info, sizeof(speed_info), "speed:%.2f     ", Motor1.Current_Speed);
+      snprintf(step_info, sizeof(step_info), "step:%.2d      ", Motor1.Step_Now);
 
       OLED_ShowString(1, 1, speed_info);
       OLED_ShowString(2, 1, step_info);
     }
-    snprintf(speed_info, sizeof(speed_info), "speed:%.2f     ", motor1.Current_Speed);
-    snprintf(step_info, sizeof(step_info), "step:%.2d      ", motor1.Step_Now);
-
+    snprintf(speed_info, sizeof(speed_info), "speed:%.2f     ", Motor1.Current_Speed);
+    snprintf(step_info, sizeof(step_info), "step:%.2d      ", Motor1.Step_Now);
     OLED_ShowString(1, 1, speed_info);
     OLED_ShowString(2, 1, step_info);
     HAL_Delay(500);
