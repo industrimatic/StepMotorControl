@@ -19,7 +19,6 @@ typedef enum
 
 typedef struct
 {
-    // 硬件配置
     TIM_HandleTypeDef *htim;
     uint32_t channel;
     uint8_t active_channel;
@@ -28,7 +27,6 @@ typedef struct
     GPIO_TypeDef *EnPort;
     uint16_t EnPin;
 
-    // 状态成员
     uint32_t Step_Goal;
     uint32_t Step_Now;
     MotorState_t State;
@@ -44,10 +42,7 @@ typedef struct
     float Decel_Rate;
 } StepMotor_t;
 
-void StepMotor_Init(StepMotor_t *motor, TIM_HandleTypeDef *htim, uint32_t channel,
-                    GPIO_TypeDef *dir_port, uint16_t dir_pin,
-                    GPIO_TypeDef *enable_port, uint16_t enable_pin, float start_speed);
-
+void StepMotor_Init(StepMotor_t *motor, TIM_HandleTypeDef *htim, uint32_t channel, GPIO_TypeDef *dir_port, uint16_t dir_pin, GPIO_TypeDef *enable_port, uint16_t enable_pin, float start_speed);
 void StepMotor_Step_Trapezoid(StepMotor_t *motor, float Target_Speed, uint32_t Total_Steps, uint32_t Accel_Steps, uint32_t Decel_Steps, Dir_t Dir);
 void StepMotor_Update_IT(StepMotor_t *motor);
 #endif
